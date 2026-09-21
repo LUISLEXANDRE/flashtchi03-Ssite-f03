@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="FLASHTCHI03 — Découvrez nos produits pratiques et tendance avec livraison au Sénégal.">
+<meta name="keywords" content="FLASHTCHI03, produits tendance, boutique en ligne, Sénégal, Dakar">
+<meta name="author" content="FLASHTCHI03">
+<meta property="og:title" content="FLASHTCHI03 — Boutique en ligne">
+<meta property="og:description" content="Découvrez les produits pratiques et tendance de FLASHTCHI03 avec livraison au Sénégal.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="images/x688.jpg">
+
+<meta name="theme-color" content="#0066ff">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLASHTCHI03 — Boutique en ligne au Sénégal</title>
+
+<link rel="stylesheet" href="style.CSS">
+    <link
+    rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>"
+>
+
+
+    <!-- EN-TÊTE -->
+    <header class="header">
+
+        <div class="logo">
+            ⚡ FLASHTCHI03
+        </div>
+
+      <nav class="navigation" id="navigation">
+    <a href="#accueil">Accueil</a>
+    <a href="#boutique">Boutique</a>
+    <a href="#livraison">Livraison</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+<button class="menu-button" id="menuButton">
+    ☰
+</button>
+        <button class="cart-button" id="cartButton">
+    🛒 Panier <span id="cartCount">0</span>
+</button>
+
+    </header>
+
+    <!-- PANIER -->
+<div class="cart-overlay" id="cartOverlay">
+
+    <div class="cart-panel">
+
+        <div class="cart-header">
+            <h2>🛒 Mon panier</h2>
+
+            <button id="closeCart">
+                ✕
+            </button>
+        </div>
+
+        <div id="cartItems">
+            <!-- Les produits du panier apparaîtront ici -->
+        </div>
+
+        <div class="cart-footer">
+
+            <div class="cart-total">
+                Total :
+                <strong id="cartTotal">0 FCFA</strong>
+            </div>
+
+            <button class="checkout-button" id="checkoutButton">
+    📲 Commander
+</button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+    <!-- HERO -->
+    <main>
+
+        <section class="hero" id="accueil">
+
+            <div class="hero-content">
+
+                <p class="hero-small">
+                    ⚡ FLASHTCHI03
+                </p>
+
+                <h1>
+                    Des produits utiles.<br>
+                    Un style unique.
+                </h1>
+
+                <p>
+                    Découvrez notre sélection de produits
+                    pratiques, tendance et innovants.
+                </p>
+
+                <a href="#boutique" class="hero-button">
+                    Découvrir la boutique
+                </a>
+                <div class="trust-badges">
+
+    <div class="trust-item">
+        🚚
+        <span>Livraison au Sénégal</span>
+    </div>
+
+    <div class="trust-item">
+        🔒
+        <span>Commande sécurisée</span>
+    </div>
+
+    <div class="trust-item">
+        💬
+        <span>Support WhatsApp</span>
+    </div>
+
+</div>
+
+            </div>
+
+        </section>
+
+
+        <!-- BOUTIQUE -->
+        <section class="shop" id="boutique">
+
+            <div class="section-title">
+
+                <p>NOTRE SÉLECTION</p>
+
+                <h2>
+                    Produits tendance
+                </h2>
+
+            </div>
+
+            <div class="products" id="productsContainer">
+    <!-- Les produits seront ajoutés avec JavaScript -->
+</div>
+
+<!-- FICHE PRODUIT -->
+
+<div class="product-overlay" id="productOverlay">
+
+    <div class="product-detail">
+
+        <button class="product-detail-close" id="closeProduct">
+            ✕
+        </button>
+
+        <img
+            id="detailImage"
+            src=""
+            alt="Produit"
+        >
+
+        <div class="product-detail-info">
+
+            <p class="detail-label">
+                FLASHTCHI03
+            </p>
+
+            <h2 id="detailName">
+                Produit
+            </h2>
+
+            <p id="detailDescription">
+                Description
+            </p>
+
+<p class="detail-stock" id="detailStock">📦 Stock disponible : 10 unités</p>
+
+            <div class="detail-price" id="detailPrice">
+                0 FCFA
+            </div>
+
+            <button
+                class="detail-cart-button"
+                id="detailCartButton"
+            >
+                🛒 Ajouter au panier
+            </button>
+
+            <button class="buy-now-button" id="buyNowButton">
+    ⚡ Acheter maintenant
+</button>
+
+        </div>
+
+    </div>
+
+</div>
+
+        </section>
+
+<!-- LIVRAISON -->
+
+<section class="delivery" id="livraison">
+
+    <div class="section-title">
+
+        <p>INFOS LIVRAISON</p>
+
+        <h2>
+            Nous livrons vos commandes 📦
+        </h2>
+
+    </div>
+
+    <div class="delivery-grid">
+
+        <div class="delivery-card">
+
+            <div class="delivery-icon">
+                🚚
+            </div>
+
+            <h3>
+                Livraison à Dakar
+            </h3>
+
+            <p>
+                Nous livrons dans les différents quartiers
+                de Dakar.
+            </p>
+
+        </div>
+
+
+        <div class="delivery-card">
+
+            <div class="delivery-icon">
+                🇸🇳
+            </div>
+
+           <h3>Livraison partout au Sénégal 🇸🇳</h3>
+<p>Nous livrons vos commandes partout au Sénégal.</p>
+
+        </div>
+
+
+        <div class="delivery-card">
+
+            <div class="delivery-icon">
+                💬
+            </div>
+
+            <h3>
+                Confirmation WhatsApp
+            </h3>
+
+            <p>
+                Votre commande est confirmée directement
+                avec notre équipe.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="why-us">
+
+    <div class="section-title">
+        <p>POURQUOI NOUS ?</p>
+        <h2>Pourquoi choisir FLASHTCHI03 ? ⚡</h2>
+    </div>
+
+
+    <div class="why-grid">
+
+        <div class="why-card">
+            <div class="why-icon">💎</div>
+            <h3>Produits sélectionnés</h3>
+            <p>Des produits pratiques et tendance choisis avec attention.</p>
+        </div>
+
+        <div class="why-card">
+            <div class="why-icon">🚚</div>
+            <h3>Livraison</h3>
+            <p>Nous organisons la livraison de vos commandes au Sénégal.</p>
+        </div>
+
+        <div class="why-card">
+            <div class="why-icon">💬</div>
+            <h3>Service WhatsApp</h3>
+            <p>Une confirmation simple et rapide directement sur WhatsApp.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="reviews">
+
+    <div class="section-title">
+        <p>AVIS CLIENTS</p>
+        <h2>Ils parlent de FLASHTCHI03 ⭐</h2>
+    </div>
+
+    <div class="reviews-grid">
+
+        <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <p>« Produit pratique et commande rapide. »</p>
+            <strong>Client FLASHTCHI03</strong>
+        </div>
+
+        <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <p>« La commande WhatsApp était simple et rapide. »</p>
+            <strong>Client FLASHTCHI03</strong>
+        </div>
+
+        <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <p>« Livraison bien organisée et produit conforme. »</p>
+            <strong>Client FLASHTCHI03</strong>
+        </div>
+
+    </div>
+
+</section>
+
+        <!-- CONTACT -->
+        <section class="contact" id="contact">
+
+            <h2>
+                Une question ?
+            </h2>
+
+            <p>
+                Contactez FLASHTCHI03 directement sur WhatsApp.
+            </p>
+
+            <a href="#" class="whatsapp-button" id="whatsappButton">
+                💬 Commander sur WhatsApp
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <!-- PIED DE PAGE -->
+     <!-- FORMULAIRE DE COMMANDE -->
+
+<div class="order-overlay" id="orderOverlay">
+
+    <div class="order-form">
+
+        <div class="order-header">
+
+            <h2>📦 Votre commande</h2>
+
+            <button id="closeOrder">
+                ✕
+            </button>
+
+        </div>
+
+        <form id="orderForm">
+
+            <label for="customerName">
+                Nom et prénom
+            </label>
+
+            <input
+                type="text"
+                id="customerName"
+                placeholder="Ex : Luis Mendes"
+                required
+            >
+
+            <label for="customerPhone">
+                Numéro WhatsApp
+            </label>
+
+            <input
+                type="tel"
+                id="customerPhone"
+                placeholder="Ex : 77 123 45 67"
+                required
+            >
+
+            <label for="customerAddress">
+                Adresse / Quartier
+            </label>
+
+            <input
+                type="text"
+                id="customerAddress"
+                placeholder="Ex : Pikine"
+                required
+            >
+
+            <label for="customerCity">
+                Ville
+            </label>
+
+            <input
+                type="text"
+                id="customerCity"
+                placeholder="Ex : Dakar"
+                required
+            >
+
+            <div class="order-summary">
+
+                <p>
+                    Produit :
+                    <strong id="orderProduct">
+                        Mini Ventilateur X688 USB
+                    </strong>
+                </p>
+
+                <p>
+                    Quantité :
+                    <strong id="orderQuantity">
+                        1
+                    </strong>
+                </p>
+
+                <p>
+                    Total :
+                    <strong id="orderTotal">
+                        3 500 FCFA
+                    </strong>
+                </p>
+
+            </div>
+
+            <button
+                type="submit"
+                class="whatsapp-order-button"
+            >
+                💬 Envoyer la commande sur WhatsApp
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+    <footer>
+
+        <p>
+            © 2026 FLASHTCHI03 — Tous droits réservés.
+        </p>
+
+    </footer>
+
+
+    <script src="produits.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+<a
+    href="https://wa.me/TON_NUMERO"
+    class="whatsapp-float"
+    target="_blank"
+    aria-label="Contacter FLASHTCHI03 sur WhatsApp"
+>
+    💬
+</a>
+
+</html>

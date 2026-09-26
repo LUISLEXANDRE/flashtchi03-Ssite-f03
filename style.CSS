@@ -8,6 +8,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 :root {
     --bleu-flashtchi: #0066ff;
     --noir-flashtchi: #111111;
@@ -25,6 +29,8 @@ body {
     color: #111111;
     line-height: 1.6;
 }
+
+
 
 /* =========================
    HEADER
@@ -155,7 +161,7 @@ body {
 
 .products {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 25px;
     max-width: 1200px;
     margin: auto;
@@ -1081,4 +1087,276 @@ footer {
         font-size: 25px;
     }
 
+}
+
+/* =========================
+   IMAGES PRODUITS - STANDARD
+========================= */
+
+.product-card .product-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    background: #f5f5f5;
+    padding: 15px;
+   
+}
+
+.product-detail > img {
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    background: #f5f5f5;
+    padding: 20px;
+    border-radius: 14px;
+}
+
+@media (max-width: 700px) {
+
+    .product-card .product-image {
+        padding: 10px;
+    }
+
+    .product-detail > img {
+        max-width: 100%;
+        padding: 12px;
+    }
+
+}
+
+/* =========================
+   EFFET IMAGE PRODUIT
+========================= */
+
+.product-card .product-image {
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.03);
+}
+
+/* =========================
+   RUPTURE DE STOCK
+========================= */
+
+.stock-badge.out-of-stock {
+    background: #fde8e8;
+    color: #c62828;
+}
+
+/* =========================
+   BOUTONS DÉSACTIVÉS
+========================= */
+
+.detail-cart-button:disabled,
+.buy-now-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.detail-cart-button:disabled:hover,
+.buy-now-button:disabled:hover {
+    background: inherit;
+    color: inherit;
+}
+
+/* =========================
+   BOUTON PRODUIT DÉSACTIVÉ
+========================= */
+
+.product-button:disabled {
+    background: #dddddd;
+    color: #888888;
+    cursor: not-allowed;
+    opacity: 1;
+}
+
+.product-button:disabled:hover {
+    transform: none;
+}
+
+/* =========================
+   RETOUR EN HAUT
+========================= */
+
+.back-to-top {
+    position: fixed;
+    right: 20px;
+    bottom: 90px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: var(--bleu-flashtchi);
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+    z-index: 9998;
+    transition: 0.25s ease;
+}
+
+.back-to-top:hover {
+    transform: translateY(-3px);
+}
+
+.back-to-top.show {
+    display: flex;
+}
+
+@media (max-width: 700px) {
+
+    .back-to-top {
+        right: 15px;
+        bottom: 80px;
+        width: 46px;
+        height: 46px;
+    }
+
+}
+
+/* =========================
+   ANIMATION PRODUITS
+========================= */
+
+.product-card {
+    animation: apparitionProduit 0.5s ease both;
+}
+
+@keyframes apparitionProduit {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================
+   PRODUITS À VENIR
+========================= */
+
+.future-products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: 40px auto 0;
+}
+
+.future-product {
+    background: #ffffff;
+    border: 2px dashed #d9d9d9;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.future-product-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 14px;
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 55px;
+    margin-bottom: 18px;
+}
+
+.future-product h3 {
+    margin: 5px 0;
+    color: var(--noir-flashtchi);
+}
+
+.future-product p {
+    margin: 5px 0;
+    color: #777777;
+}
+
+@media (max-width: 700px) {
+
+    .future-products {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
+    .future-product {
+        min-height: 240px;
+    }
+
+    .future-product-image {
+        width: 130px;
+        height: 130px;
+        font-size: 48px;
+    }
+
+}
+
+/* =========================
+   TITRE PRODUITS À VENIR
+========================= */
+
+.future-products-title {
+    text-align: center;
+    margin: 50px auto 25px;
+}
+
+.future-products-title p {
+    margin: 0 0 8px;
+    color: var(--bleu-flashtchi);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.future-products-title h2 {
+    margin: 0;
+    color: var(--noir-flashtchi);
+    font-size: 28px;
+}
+
+/* =========================
+   LOGO FLASHTCHI03
+========================= */
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo img {
+    width: 150px;
+    height: auto;
+    display: block;
+}
+
+@media (max-width: 700px) {
+    .logo img {
+        width: 120px;
+    }
 }

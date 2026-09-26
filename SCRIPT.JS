@@ -18,6 +18,12 @@ const detailPrice = document.getElementById("detailPrice");
 const detailCartButton = document.getElementById("detailCartButton");
 const buyNowButton = document.getElementById("buyNowButton");
 let produitDetailActuel = null;
+function formaterPrix(prix) {
+    return prix.toLocaleString("fr-FR") + " FCFA";
+}
+function formaterPrix(prix) {
+    return prix.toLocaleString("fr-FR") + " FCFA";
+}
 const checkoutButton = document.getElementById("checkoutButton");
 const orderOverlay = document.getElementById("orderOverlay");
 const closeOrder = document.getElementById("closeOrder");
@@ -28,7 +34,7 @@ const orderForm = document.getElementById("orderForm");
 // =========================
 
 produits.forEach((produit) => {
-
+ 
     const productCard = document.createElement("div");
 
     productCard.className = "product-card";
@@ -43,20 +49,20 @@ productCard.addEventListener("click", (event) => {
     ouvrirProduit(produit.id);
 });
     productCard.innerHTML = `
-        <img 
-            src="${produit.image}" 
-            alt="${produit.nom}" 
-            class="product-image"
-        >
-
-<img
+ <img
     src="${produit.image}"
     alt="${produit.nom}"
     class="product-image"
+    loading="lazy"
+    decoding="async"
+    onerror="this.src='https://placehold.co/600x600/f5f5f5/666666?text=FLASHTCHI03'"
 >
 
-<div class="stock-badge">🟢 EN STOCK : ${produit.stock} unités</div>
-
+<div class="stock-badge ${produit.stock <= 0 ? "out-of-stock" : ""}">
+    ${produit.stock > 0
+        ? `🟢 EN STOCK : ${produit.stock} unités`
+        : "🔴 RUPTURE DE STOCK"}
+</div>
 <div class="product-info">
 
         <div class="product-info">
@@ -67,21 +73,17 @@ productCard.addEventListener("click", (event) => {
                 ${produit.description}
             </p>
 
-            <div class="product-price">
-                ${
-                    produit.prix > 0
-                    ? produit.prix + " FCFA"
-                    : "Prix bientôt disponible"
-                }
-            </div>
+           <div class="product-price">${formaterPrix(produit.prix)}</div>
 
-            <button 
-                class="product-button"
-                onclick="ajouterAuPanier(${produit.id})"
-            >
-                🛒 Ajouter au panier
-            </button>
-
+          <button
+    class="product-button"
+    onclick="ajouterAuPanier(${produit.id})"
+    ${produit.stock <= 0 ? "disabled" : ""}
+>
+    ${produit.stock > 0
+        ? "🛒 Ajouter au panier"
+        : "🔴 Rupture de stock"}
+</button>
         </div>
     `;
 
@@ -98,6 +100,11 @@ function ajouterAuPanier(id) {
     const produit = produits.find(p => p.id === id);
 
     const existe = panier.find(p => p.id === id);
+
+if (produit.stock <= 0) {
+    alert("❌ Ce produit est actuellement en rupture de stock.");
+    return;
+}
 
 if (existe && existe.quantite >= produit.stock) {
     alert("⚠️ Stock maximum disponible : " + produit.stock + " unités.");
@@ -138,7 +145,7 @@ function afficherPanier() {
             <p>Ton panier est vide 🛒</p>
         `;
 
-        cartTotal.textContent = "0 FCFA";
+        cartTotal.textContent = formaterPrix(0);
 
         return;
     }
@@ -160,7 +167,7 @@ function afficherPanier() {
             <h3>${produit.nom}</h3>
 
             <p>
-                ${produit.prix} FCFA
+                ${formaterPrix(produit.prix)}
             </p>
 
             <div class="quantity-buttons">
@@ -173,9 +180,9 @@ function afficherPanier() {
                     ${produit.quantite}
                 </strong>
 
-<small>
-    📦 Stock : ${produit.stock}
-</small>
+                <small>
+                    📦 Stock : ${produit.stock}
+                </small>
 
                 <button onclick="modifierQuantite(${produit.id}, 1)">
                     +
@@ -195,9 +202,8 @@ function afficherPanier() {
 
     });
 
-    cartTotal.textContent = total + " FCFA";
+    cartTotal.textContent = formaterPrix(total);
 }
-
 
 // =========================
 // MODIFIER QUANTITÉ
@@ -325,8 +331,7 @@ checkoutButton.addEventListener("click", () => {
         0
     );
 
-    document.getElementById("orderTotal").textContent =
-        total + " FCFA";
+    orderTotal.textContent = formaterPrix(total);
 
     orderOverlay.style.display = "flex";
 
@@ -368,14 +373,34 @@ orderForm.addEventListener("submit", (event) => {
     const nom =
         document.getElementById("customerName").value.trim();
 
+if (nom.length < 2) {
+    alert("⚠️ Entre ton nom et prénom.");
+    return;
+}
+
     const telephone =
         document.getElementById("customerPhone").value.trim();
+
+if (telephone.length < 8) {
+    alert("⚠️ Entre un numéro WhatsApp valide.");
+    return;
+}
 
     const adresse =
         document.getElementById("customerAddress").value.trim();
 
+if (adresse.length < 3) {
+    alert("⚠️ Entre ton adresse ou ton quartier.");
+    return;
+}
+
     const ville =
         document.getElementById("customerCity").value.trim();
+
+if (ville.length < 2) {
+    alert("⚠️ Entre ta ville.");
+    return;
+}
 
     if (panier.length === 0) {
 
@@ -395,8 +420,8 @@ orderForm.addEventListener("submit", (event) => {
 
         total += sousTotal;
 
-        produitsMessage +=
-            `• ${produit.nom} x${produit.quantite} = ${sousTotal} FCFA\n`;
+       produitsMessage +=
+    `• ${produit.nom} x${produit.quantite} = ${formaterPrix(sousTotal)}\n`;
     });
 
 
@@ -409,7 +434,7 @@ orderForm.addEventListener("submit", (event) => {
         `🏙️ Ville : ${ville}\n\n` +
         `🛍️ PRODUIT(S) :\n` +
         `${produitsMessage}\n` +
-        `💰 *TOTAL : ${total} FCFA*\n\n` +
+        `💰 *TOTAL : ${formaterPrix(total)}*\n\n` +
         `Merci. Je souhaite confirmer cette commande. ⚡`;
 
 
@@ -441,8 +466,8 @@ function ouvrirProduit(id) {
     detailDescription.textContent = produit.description;
 detailStock.textContent =
     "📦 Stock disponible : " + produit.stock + " unités";
-    detailPrice.textContent =
-        produit.prix + " FCFA";
+   detailPrice.textContent = formaterPrix(produit.prix);
+   detailCartButton.disabled = produit.stock <= 0;
 
     productOverlay.style.display = "flex";
 }
@@ -511,6 +536,31 @@ navigationLinks.forEach((link) => {
 
         navigation.classList.remove("active");
 
+    });
+
+});
+
+// =========================
+// RETOUR EN HAUT
+// =========================
+
+const backToTop = document.getElementById("backToTop");
+
+window.addEventListener("scroll", () => {
+
+    if (window.scrollY > 400) {
+        backToTop.classList.add("show");
+    } else {
+        backToTop.classList.remove("show");
+    }
+
+});
+
+backToTop.addEventListener("click", () => {
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
     });
 
 });

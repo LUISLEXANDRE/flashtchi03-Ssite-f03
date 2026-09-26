@@ -15,18 +15,14 @@
     <title>FLASHTCHI03 — Boutique en ligne au Sénégal</title>
 
 <link rel="stylesheet" href="style.CSS">
-    <link
-    rel="icon"
-    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>"
->
-
+ <link rel="icon" type="image/jpeg" href="images/LOGOF03206.jpeg">
 
     <!-- EN-TÊTE -->
     <header class="header">
 
-        <div class="logo">
-            ⚡ FLASHTCHI03
-        </div>
+      <a href="#accueil" class="logo">
+    <img src="images/LOGOF03206.jpeg" alt="FLASHTCHI03">
+</a>
 
       <nav class="navigation" id="navigation">
     <a href="#accueil">Accueil</a>
@@ -144,6 +140,39 @@
     <!-- Les produits seront ajoutés avec JavaScript -->
 </div>
 
+<div class="future-products-title">
+    <p>BIENTÔT DISPONIBLE</p>
+    <h2>Nos prochains produits ⚡</h2>
+</div>
+
+<div class="future-products">
+
+    <div class="future-product">
+        <div class="future-product-image">
+            📦
+        </div>
+        <h3>Produit à venir</h3>
+        <p>Bientôt disponible</p>
+    </div>
+
+    <div class="future-product">
+        <div class="future-product-image">
+            📦
+        </div>
+        <h3>Produit à venir</h3>
+        <p>Bientôt disponible</p>
+    </div>
+
+    <div class="future-product">
+        <div class="future-product-image">
+            📦
+        </div>
+        <h3>Produit à venir</h3>
+        <p>Bientôt disponible</p>
+    </div>
+
+</div> 
+
 <!-- FICHE PRODUIT -->
 
 <div class="product-overlay" id="productOverlay">
@@ -154,11 +183,13 @@
             ✕
         </button>
 
-        <img
-            id="detailImage"
-            src=""
-            alt="Produit"
-        >
+       <img
+    src="${produit.image}"
+    alt="${produit.nom}"
+    class="product-image"
+    loading="lazy"
+    decoding="async"
+>
 
         <div class="product-detail-info">
 
@@ -431,7 +462,7 @@
                 <p>
                     Total :
                     <strong id="orderTotal">
-                        3 500 FCFA
+                     3 500 FCFA
                     </strong>
                 </p>
 
@@ -460,6 +491,10 @@
 
     <script src="produits.js"></script>
     <script src="script.js"></script>
+    
+   <button id="backToTop" class="back-to-top" aria-label="Retour en haut">
+    ↑
+</button> 
 
 </body>
 

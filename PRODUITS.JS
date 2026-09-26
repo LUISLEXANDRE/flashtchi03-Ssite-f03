@@ -6,7 +6,7 @@ const produits = [
         description: "Mini ventilateur portable USB, pratique pour se rafraîchir partout.",
         prix: 3500,
         stock: 10,
-        image: "images/x688.jpg"
+       image: "images/X688.JPG.jpeg"
     }
 
 ];

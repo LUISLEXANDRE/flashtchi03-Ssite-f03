@@ -34,7 +34,7 @@ const orderForm = document.getElementById("orderForm");
 // =========================
 
 produits.forEach((produit) => {
- 
+
     const productCard = document.createElement("div");
 
     productCard.className = "product-card";
@@ -299,12 +299,8 @@ closeCart.addEventListener("click", () => {
 
 // Fermer en cliquant à côté du panier
 
-cartOverlay.addEventListener("click", (event) => {
 
-    if (event.target === cartOverlay) {
-
-        cartOverlay.style.display = "none";
-    }// =========================
+// =========================
 // OUVRIR LE FORMULAIRE
 // =========================
 
@@ -358,7 +354,7 @@ orderOverlay.addEventListener("click", (event) => {
         orderOverlay.style.display = "none";
     }
 
-});
+
 
 });
 

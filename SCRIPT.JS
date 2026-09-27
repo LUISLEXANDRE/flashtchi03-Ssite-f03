@@ -33,6 +33,9 @@ const orderForm = document.getElementById("orderForm");
 // AFFICHER LES PRODUITS
 // =========================
 
+console.log("SCRIPT.JS chargé");
+console.log("Produits disponibles :", produits);
+
 produits.forEach((produit) => {
 
     const productCard = document.createElement("div");

@@ -16,6 +16,10 @@ const detailDescription = document.getElementById("detailDescription");
 const detailStock = document.getElementById("detailStock");
 const detailPrice = document.getElementById("detailPrice");
 const detailCartButton = document.getElementById("detailCartButton");
+const colorOptions = document.getElementById("colorOptions");
+const selectedColor = document.getElementById("selectedColor");
+
+let couleurSelectionnee = null;
 const buyNowButton = document.getElementById("buyNowButton");
 let produitDetailActuel = null;
 function formaterPrix(prix) {
@@ -70,7 +74,13 @@ productCard.addEventListener("click", (event) => {
 
         <div class="product-info">
 
-            <h3>${produit.nom}</h3>
+          <h3>${produit.nom}</h3>
+
+<p>
+    🎨 Couleur : <strong>${produit.couleur || "Non sélectionnée"}</strong>
+</p>
+
+
 
             <p class="product-description">
                 ${produit.description}
@@ -79,9 +89,8 @@ productCard.addEventListener("click", (event) => {
            <div class="product-price">${formaterPrix(produit.prix)}</div>
 
           <button
-    class="product-button"
-    onclick="ajouterAuPanier(${produit.id})"
-    ${produit.stock <= 0 ? "disabled" : ""}
+    class="product-button"onclick="ouvrirProduit(${produit.id})"
+        ${produit.stock <= 0 ? "disabled" : ""}
 >
     ${produit.stock > 0
         ? "🛒 Ajouter au panier"
@@ -98,21 +107,29 @@ productCard.addEventListener("click", (event) => {
 // AJOUTER AU PANIER
 // =========================
 
-function ajouterAuPanier(id) {
+function ajouterAuPanier(id, couleur = null) {
 
     const produit = produits.find(p => p.id === id);
 
-    const existe = panier.find(p => p.id === id);
+    if (!produit) return;
 
-if (produit.stock <= 0) {
-    alert("❌ Ce produit est actuellement en rupture de stock.");
-    return;
-}
+    const existe = panier.find(
+        p => p.id === id && p.couleur === couleur
+    );
 
-if (existe && existe.quantite >= produit.stock) {
-    alert("⚠️ Stock maximum disponible : " + produit.stock + " unités.");
-    return;
-}
+    if (produit.stock <= 0) {
+        alert("❌ Ce produit est actuellement en rupture de stock.");
+        return;
+    }
+
+    if (existe && existe.quantite >= produit.stock) {
+        alert(
+            "⚠️ Stock maximum disponible : " +
+            produit.stock +
+            " unités."
+        );
+        return;
+    }
 
     if (existe) {
 
@@ -122,12 +139,15 @@ if (existe && existe.quantite >= produit.stock) {
 
         panier.push({
             ...produit,
+            couleur: couleur,
             quantite: 1
         });
+
     }
 
     mettreAJourPanier();
-    afficherPanier();
+
+    alert("✅ Produit ajouté au panier.");
 
 }
 
@@ -136,107 +156,110 @@ if (existe && existe.quantite >= produit.stock) {
 // AFFICHER LE PANIER
 // =========================
 
-function afficherPanier() {
-
-    cartOverlay.style.display = "flex";
+ function afficherPanier() {
 
     cartItems.innerHTML = "";
 
     if (panier.length === 0) {
 
-        cartItems.innerHTML = `
-            <p>Ton panier est vide 🛒</p>
-        `;
+        cartItems.innerHTML = "<p>🛒 Ton panier est vide</p>";
+        cartTotal.textContent = "0 FCFA";
 
-        cartTotal.textContent = formaterPrix(0);
+        cartOverlay.style.setProperty("display", "flex", "important");
 
         return;
     }
 
-    let total = 0;
-
     panier.forEach((produit) => {
-
-        const sousTotal =
-            produit.prix * produit.quantite;
-
-        total += sousTotal;
 
         const item = document.createElement("div");
 
         item.className = "cart-item";
 
         item.innerHTML = `
-            <h3>${produit.nom}</h3>
 
-            <p>
-                ${formaterPrix(produit.prix)}
-            </p>
+        <h3>${produit.nom}</h3>
 
-            <div class="quantity-buttons">
+       <p class="cart-color">
+    🎨 Couleur :
+    <span class="color-badge ${produit.couleur ? produit.couleur.toLowerCase() : ""}">
+        ${produit.couleur || "Non choisie"}
+    </span>
+</p>
 
-                <button onclick="modifierQuantite(${produit.id}, -1)">
-                    −
-                </button>
+        <p>
+        Prix : ${formaterPrix(produit.prix)}
+        </p>
 
-                <strong>
-                    ${produit.quantite}
-                </strong>
+        <p>
+        Quantité : ${produit.quantite}
+        </p>
 
-                <small>
-                    📦 Stock : ${produit.stock}
-                </small>
+        <button onclick="modifierQuantite(${produit.id}, '${produit.couleur}', -1)">
+        -
+        </button>
 
-                <button onclick="modifierQuantite(${produit.id}, 1)">
-                    +
-                </button>
+        <button onclick="modifierQuantite(${produit.id}, '${produit.couleur}', 1)">
+        +
+        </button>
 
-            </div>
+        <button onclick="supprimerDuPanier(${produit.id}, '${produit.couleur}')">
+        ❌ Supprimer
+        </button>
 
-            <button 
-                class="remove-button"
-                onclick="supprimerDuPanier(${produit.id})"
-            >
-                Supprimer
-            </button>
         `;
 
         cartItems.appendChild(item);
 
     });
 
+    const total = panier.reduce(
+        (somme, produit) =>
+            somme + produit.prix * produit.quantite,
+        0
+    );
+
     cartTotal.textContent = formaterPrix(total);
-}
+
+    cartOverlay.style.setProperty("display", "flex", "important");
+
+}   
 
 // =========================
 // MODIFIER QUANTITÉ
 // =========================
 
-function modifierQuantite(id, changement) {
+function modifierQuantite(id, couleur, changement) {
 
-    const produit = panier.find(p => p.id === id);
+    const produit = panier.find(
+        p => p.id === id && p.couleur === couleur
+    );
 
     if (!produit) return;
 
     produit.quantite += changement;
 
-if (produit.quantite > produit.stock) {
-    produit.quantite = produit.stock;
+    if (produit.quantite > produit.stock) {
 
-    alert(
-        "⚠️ Stock maximum disponible : " +
-        produit.stock +
-        " unités."
-    );
+        produit.quantite = produit.stock;
 
-    mettreAJourPanier();
-    afficherPanier();
-    return;
-}
+        alert(
+            "⚠️ Stock maximum disponible : " +
+            produit.stock +
+            " unités."
+        );
+
+        mettreAJourPanier();
+        afficherPanier();
+
+        return;
+    }
 
     if (produit.quantite <= 0) {
 
-        panier = panier.filter(p => p.id !== id);
+        panier = panier.filter(
+            p => !(p.id === id && p.couleur === couleur)
+        );
     }
 
     mettreAJourPanier();
@@ -248,9 +271,11 @@ if (produit.quantite > produit.stock) {
 // SUPPRIMER DU PANIER
 // =========================
 
-function supprimerDuPanier(id) {
+function supprimerDuPanier(id, couleur) {
 
-    panier = panier.filter(p => p.id !== id);
+    panier = panier.filter(
+        p => !(p.id === id && p.couleur === couleur)
+    );
 
     mettreAJourPanier();
     afficherPanier();
@@ -284,10 +309,15 @@ function mettreAJourPanier() {
 
 cartButton.addEventListener("click", () => {
 
+    console.log("BOUTON PANIER CLIQUÉ");
+
     afficherPanier();
 
-});
+    cartOverlay.style.setProperty("display", "flex", "important");
 
+    console.log("DISPLAY APRÈS :", cartOverlay.style.display);
+
+});
 
 // =========================
 // FERMER LE PANIER
@@ -307,6 +337,7 @@ closeCart.addEventListener("click", () => {
 // OUVRIR LE FORMULAIRE
 // =========================
 
+
 checkoutButton.addEventListener("click", () => {
 
     if (panier.length === 0) {
@@ -321,8 +352,14 @@ checkoutButton.addEventListener("click", () => {
     document.getElementById("orderProduct").textContent =
         produit.nom;
 
+    const quantiteTotale = panier.reduce(
+        (total, produit) =>
+            total + produit.quantite,
+        0
+    );
+
     document.getElementById("orderQuantity").textContent =
-        produit.quantite;
+        quantiteTotale;
 
     const total = panier.reduce(
         (somme, produit) =>
@@ -335,7 +372,6 @@ checkoutButton.addEventListener("click", () => {
     orderOverlay.style.display = "flex";
 
 });
-
 
 // =========================
 // FERMER LE FORMULAIRE
@@ -420,7 +456,7 @@ if (ville.length < 2) {
         total += sousTotal;
 
        produitsMessage +=
-    `• ${produit.nom} x${produit.quantite} = ${formaterPrix(sousTotal)}\n`;
+    `• ${produit.nom} — ${produit.couleur || "Couleur non précisée"} x${produit.quantite} = ${formaterPrix(sousTotal)}\n`;
     });
 
 
@@ -438,7 +474,7 @@ if (ville.length < 2) {
 
 
     // ⚠️ REMPLACE CE NUMÉRO PAR TON NUMÉRO WHATSAPP BUSINESS
-    const numeroWhatsApp = "221769260512";
+    const numeroWhatsApp = "221771046520";
 
 
     const url =
@@ -463,12 +499,71 @@ function ouvrirProduit(id) {
     detailImage.src = produit.image;
     detailName.textContent = produit.nom;
     detailDescription.textContent = produit.description;
-detailStock.textContent =
-    "📦 Stock disponible : " + produit.stock + " unités";
-   detailPrice.textContent = formaterPrix(produit.prix);
-   detailCartButton.disabled = produit.stock <= 0;
+
+    detailStock.textContent =
+        "📦 Stock disponible : " + produit.stock + " unités";
+
+    detailPrice.textContent =
+        formaterPrix(produit.prix);
+
+    // =========================
+    // COULEURS
+    // =========================
+
+    couleurSelectionnee = null;
+
+    selectedColor.textContent =
+        "Aucune couleur sélectionnée";
+
+    colorOptions.innerHTML = "";
+
+    (produit.couleurs || []).forEach((couleur) => {
+
+        const conteneur = document.createElement("div");
+        conteneur.className = "color-choice";
+
+        const bouton = document.createElement("button");
+
+        bouton.type = "button";
+        bouton.className = "color-option";
+
+        bouton.dataset.color = couleur;
+        bouton.title = couleur;
+        bouton.setAttribute("aria-label", couleur);
+
+        bouton.addEventListener("click", () => {
+
+            couleurSelectionnee = couleur;
+
+            selectedColor.textContent =
+                "Couleur choisie : " + couleur;
+
+            document
+                .querySelectorAll(".color-option")
+                .forEach((btn) => {
+                    btn.classList.remove("selected");
+                });
+
+            bouton.classList.add("selected");
+        });
+
+        const nomCouleur = document.createElement("span");
+
+        nomCouleur.className = "color-name";
+        nomCouleur.textContent = couleur;
+
+        conteneur.appendChild(bouton);
+        conteneur.appendChild(nomCouleur);
+
+        colorOptions.appendChild(conteneur);
+
+    });
+
+    detailCartButton.disabled =
+        produit.stock <= 0;
 
     productOverlay.style.display = "flex";
+
 }
 
 
@@ -480,20 +575,51 @@ detailCartButton.addEventListener("click", () => {
 
     if (!produitDetailActuel) return;
 
-    ajouterAuPanier(produitDetailActuel.id);
+    if (!couleurSelectionnee) {
+
+        alert(
+            "⚠️ Choisis une couleur avant d'ajouter le produit au panier."
+        );
+
+        return;
+    }
+
+    ajouterAuPanier(
+        produitDetailActuel.id,
+        couleurSelectionnee
+    );
 
     productOverlay.style.display = "none";
+
 });
+
+
+// =========================
+// ACHETER MAINTENANT
+// =========================
 
 buyNowButton.addEventListener("click", () => {
 
     if (!produitDetailActuel) return;
 
-    ajouterAuPanier(produitDetailActuel.id);
+    if (!couleurSelectionnee) {
+
+        alert(
+            "⚠️ Choisis une couleur avant de continuer."
+        );
+
+        return;
+    }
+
+    ajouterAuPanier(
+        produitDetailActuel.id,
+        couleurSelectionnee
+    );
 
     productOverlay.style.display = "none";
 
     checkoutButton.click();
+
 });
 
 
@@ -504,6 +630,7 @@ buyNowButton.addEventListener("click", () => {
 closeProduct.addEventListener("click", () => {
 
     productOverlay.style.display = "none";
+
 });
 
 
@@ -512,8 +639,11 @@ productOverlay.addEventListener("click", (event) => {
     if (event.target === productOverlay) {
 
         productOverlay.style.display = "none";
+
     }
+
 });
+
 // =========================
 // MENU MOBILE
 // =========================
@@ -546,6 +676,7 @@ navigationLinks.forEach((link) => {
 const backToTop = document.getElementById("backToTop");
 
 if (backToTop) {
+
     window.addEventListener("scroll", () => {
 
         if (window.scrollY > 400) {
@@ -564,4 +695,25 @@ if (backToTop) {
         });
 
     });
+
 }
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   

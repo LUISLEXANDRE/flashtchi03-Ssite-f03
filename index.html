@@ -183,7 +183,8 @@
             ✕
         </button>
 
-       <img
+     <img
+    id="detailImage"
     src="${produit.image}"
     alt="${produit.nom}"
     class="product-image"
@@ -210,6 +211,16 @@
             <div class="detail-price" id="detailPrice">
                 0 FCFA
             </div>
+
+<div class="color-selection">
+    <p class="color-title">Choisir une couleur :</p>
+
+    <div id="colorOptions" class="color-options"></div>
+
+    <p id="selectedColor" class="selected-color">
+        Aucune couleur sélectionnée
+    </p>
+</div>
 
             <button
                 class="detail-cart-button"
@@ -417,7 +428,7 @@
             <input
                 type="tel"
                 id="customerPhone"
-                placeholder="Ex : 77 123 45 67"
+                placeholder="Ex : 77 104 65 20"
                 required
             >
 
@@ -462,7 +473,7 @@
                 <p>
                     Total :
                     <strong id="orderTotal">
-                     3 500 FCFA
+                    4 500 FCFA
                     </strong>
                 </p>
 
@@ -490,6 +501,7 @@
 
 <script src="produits.js"></script>
 <script src="SCRIPT.JS"></script>
+
 <script>
 console.log("PRODUITS :", produits);
 </script>

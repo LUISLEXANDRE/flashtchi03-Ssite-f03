@@ -474,7 +474,7 @@ if (ville.length < 2) {
 
 
     // ⚠️ REMPLACE CE NUMÉRO PAR TON NUMÉRO WHATSAPP BUSINESS
-    const numeroWhatsApp = "221771046520";
+    const numeroWhatsApp = "221775288221";
 
 
     const url =
